@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SampleProject.API</name>
+    </assembly>
+    <members>
+        <member name="M:SampleProject.API.Customers.CustomersController.RegisterCustomer(SampleProject.Application.Customers.RegisterCustomer.RegisterCustomerRequest)">
+            <summary>
+            Register customer.
+            </summary>
+        </member>
+        <member name="M:SampleProject.API.Orders.CustomerOrdersController.GetCustomerOrders(System.Guid)">
+            <summary>
+            Get customer orders.
+            </summary>
+            <param name="customerId">Customer ID.</param>
+            <returns>List of customer orders.</returns>
+        </member>
+        <member name="M:SampleProject.API.Orders.CustomerOrdersController.GetCustomerOrderDetails(System.Guid)">
+            <summary>
+            Get customer order details.
+            </summary>
+            <param name="orderId">Order ID.</param>
+        </member>
+        <member name="M:SampleProject.API.Orders.CustomerOrdersController.AddCustomerOrder(System.Guid,SampleProject.API.Orders.CustomerOrderRequest)">
+            <summary>
+            Add customer order.
+            </summary>
+            <param name="customerId">Customer ID.</param>
+            <param name="request">Products list.</param>
+        </member>
+        <member name="M:SampleProject.API.Orders.CustomerOrdersController.ChangeCustomerOrder(System.Guid,System.Guid,SampleProject.API.Orders.CustomerOrderRequest)">
+            <summary>
+            Change customer order.
+            </summary>
+            <param name="customerId">Customer ID.</param>
+            <param name="orderId">Order ID.</param>
+            <param name="request">List of products.</param>
+        </member>
+        <member name="M:SampleProject.API.Orders.CustomerOrdersController.RemoveCustomerOrder(System.Guid,System.Guid)">
+            <summary>
+            Remove customer order.
+            </summary>
+            <param name="customerId">Customer ID.</param>
+            <param name="orderId">Order ID.</param>
+        </member>
+    </members>
+</doc>

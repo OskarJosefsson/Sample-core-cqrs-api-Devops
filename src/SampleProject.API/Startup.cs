@@ -27,8 +27,6 @@ namespace SampleProject.API
     {
         private readonly IConfiguration _configuration;
 
-        private const string OrdersConnectionString = "OrdersConnectionString";
-
         private static ILogger _logger;
 
         public Startup(IWebHostEnvironment env)
@@ -38,9 +36,9 @@ namespace SampleProject.API
 
             this._configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json")
-                .AddJsonFile($"hosting.{env.EnvironmentName}.json")
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddUserSecrets<Startup>()
+                .AddEnvironmentVariables()
                 .Build();
         }
 
@@ -56,8 +54,7 @@ namespace SampleProject.API
             {
                 x.Map<InvalidCommandException>(ex => new InvalidCommandProblemDetails(ex));
                 x.Map<BusinessRuleValidationException>(ex => new BusinessRuleValidationExceptionProblemDetails(ex));
-            });
-            
+            });       
 
             services.AddHttpContextAccessor();
             var serviceProvider = services.BuildServiceProvider();
@@ -70,7 +67,7 @@ namespace SampleProject.API
             var memoryCache = serviceProvider.GetService<IMemoryCache>();
             return ApplicationStartup.Initialize(
                 services, 
-                this._configuration.GetConnectionString(OrdersConnectionString),
+                this._configuration.GetConnectionString("OrdersConnectionString"),
                 new MemoryCacheStore(memoryCache, cachingConfiguration),
                 null,
                 emailsSettings,
