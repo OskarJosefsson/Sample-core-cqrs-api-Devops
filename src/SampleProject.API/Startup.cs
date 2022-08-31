@@ -70,7 +70,7 @@ namespace SampleProject.API
             var memoryCache = serviceProvider.GetService<IMemoryCache>();
             return ApplicationStartup.Initialize(
                 services, 
-                this._configuration[OrdersConnectionString],
+                this._configuration.GetConnectionString(OrdersConnectionString),
                 new MemoryCacheStore(memoryCache, cachingConfiguration),
                 null,
                 emailsSettings,
