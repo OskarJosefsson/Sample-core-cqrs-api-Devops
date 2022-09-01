@@ -1,0 +1,59 @@
+trigger:
+- master 
+
+
+pool:
+    vmImage: 'ubuntu-latest'
+
+
+variables:
+    buildConfiguration: 'Release'
+    webAppName: 'do22-oskar'
+    newSourceBranch: "$(Build.SourceBranchName)"
+
+
+steps:
+
+    - task: UseDotNet@2
+      displayName: 'Use Dotnet'
+      inputs:
+       version: '6.0.x'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet build'
+      inputs:
+          command: build 
+          projects: 'src/SampleProject.API.sln'
+          configuration: $(buildConfiguration)
+
+
+    - task: Bash@3
+      displayName: 'Add Tag'
+      inputs:
+       targetType: 'inline'
+       script: echo '##vso[build.addbuildtag]$(newSourceBranch)' 
+          
+          
+    
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet publish'
+      inputs:
+          command: publish
+          publishWebProjects: true
+          
+  
+          
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathToPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+        
+    - task: AzureWebApp@1
+      displayName: 'Deploy to web app'
+      inputs:
+         azureSubscription: 'do22-oskar'
+         appType: 'webApp'
+         appName: '$(webAppName)'
+         package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+         deploymentMethod: 'zipDeploy'
