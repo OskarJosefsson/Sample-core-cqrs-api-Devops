@@ -39,6 +39,10 @@ namespace SampleProject.API.Customers
             return Ok(new CustomerDto { Id = Guid.NewGuid() });
         }
 
-
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCustomer(int id)
+        {
+            return Ok(new CustomerDto { Id = Guid.NewGuid() });
+        }
     }
 }
