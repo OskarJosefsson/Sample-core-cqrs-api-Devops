@@ -33,12 +33,12 @@ namespace SampleProject.API.Customers
         }
 
 
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomer(int id)
         {
             return Ok(new CustomerDto { Id = Guid.NewGuid() });
         }
-
 
     }
 }
