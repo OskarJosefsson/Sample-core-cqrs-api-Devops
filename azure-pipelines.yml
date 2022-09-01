@@ -8,7 +8,7 @@ pool:
 
 variables:
     buildConfiguration: 'Release'
-    webAppName: 'do22-oskar'
+    webAppName: 'app-do22-oskar-test'
     newSourceBranch: "$(Build.SourceBranchName)"
 
 
