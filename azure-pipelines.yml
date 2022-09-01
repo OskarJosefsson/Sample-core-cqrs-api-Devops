@@ -52,7 +52,7 @@ steps:
     - task: AzureWebApp@1
       displayName: 'Deploy to web app'
       inputs:
-         azureSubscription: 'do22-oskar'
+         azureSubscription: 'app-do22-oskar'
          appType: 'webApp'
          appName: '$(webAppName)'
          package: '$(System.DefaultWorkingDirectory)/**/*.zip'
