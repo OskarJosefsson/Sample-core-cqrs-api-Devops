@@ -52,7 +52,7 @@ stages:
      jobs:
      - deployment: DeployToTest
        displayName: Deploy app to TestEnv
-       environment: test
+       environment: 'test'
        strategy:
          runOnce:
            deploy:
