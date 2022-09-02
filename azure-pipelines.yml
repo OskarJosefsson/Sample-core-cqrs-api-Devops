@@ -40,9 +40,9 @@ stages:
           publishWebProjects: true
        - task: PublishBuildArtifacts@1
          inputs:
-          PathToPublish: '$(Build.ArtifactStagingDirectory)'
+          PathToPublish: '$(Build.ArtifactStagingDirectory)/publish'
           ArtifactName: 'drop'
-          publishLocation: 'Container'
+  
    - stage: Test
      dependsOn: Build
      variables:
@@ -63,6 +63,7 @@ stages:
                    azureSubscription: app-do22-oskar
                    appType: 'webApp'
                    WebAppName: '$(webAppName)-$(environment)'
+                   packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
                    AppSettings: '-FromAddressEmail po@customer.com'
    
         
