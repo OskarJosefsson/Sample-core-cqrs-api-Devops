@@ -56,7 +56,7 @@ stages:
      variables:
       environment: test
       jobs:
-      - deployment: DeployToTest
+      - deployment: ToTest
         displayName: Deploy app to Test env
         environment: Test
         strategy:
@@ -76,14 +76,14 @@ stages:
       - stage: Prod
         dependsOn: Test
         variables:
-        environment: prod
-        jobs:
-      - deployment: DeployToProd
-        displayName: Deploy app to Prod env
-        environment: Prod
-      strategy:
-        runOnce:
-          deploy:
+         environment: prod
+         jobs:
+         - deployment: DeployToProd
+           displayName: Deploy app to Prod env
+           environment: Prod
+           strategy:
+           runOnce:
+           deploy:
             steps:
             - download: current
               artifact: drop
