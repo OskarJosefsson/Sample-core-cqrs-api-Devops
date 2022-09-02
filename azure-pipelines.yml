@@ -38,10 +38,10 @@ stages:
          inputs:
           command: publish
           publishWebProjects: false
-          arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish'
+          arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
        - task: PublishBuildArtifacts@1
          inputs:
-          PathToPublish: '$(Build.ArtifactStagingDirectory)/publish'
+          PathToPublish: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'drop'
   
    - stage: Test
