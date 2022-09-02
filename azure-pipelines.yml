@@ -43,6 +43,7 @@ stages:
          inputs:
           PathToPublish: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'drop'
+          publishLocation: 'Container'
   
    - stage: Test
      dependsOn: Build
@@ -57,7 +58,7 @@ stages:
            deploy:
              steps:
                - download: current
-                 artifact: drop
+                 artifact: 'drop'
                - task: AzureRmWebAppDeployment@4
                  inputs:
                    ConnectionType: AzureRM
