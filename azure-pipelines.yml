@@ -56,10 +56,10 @@ stages:
      variables:
       environment: test
       jobs:
-       - deployment: DeployToTest
-         displayName: Deploy app to Test env
-         environment: Test
-         strategy:
+      - deployment: DeployToTest
+        displayName: Deploy app to Test env
+        environment: Test
+        strategy:
          runOnce:
           deploy:
             steps:
