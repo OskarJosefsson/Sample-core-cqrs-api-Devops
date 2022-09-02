@@ -28,24 +28,16 @@ stages:
           command: build 
           projects: 'src/SampleProject.API.sln'
           configuration: $(buildConfiguration)
-
-
        - task: Bash@3
-         displayName: 'Add Tag'
+         displayName: 'add Tag'
          inputs:
           targetType: 'inline'
           script: echo '##vso[build.addbuildtag]$(newSourceBranch)' 
-          
-          
-    
        - task: DotNetCoreCLI@2
          displayName: 'dotnet publish'
          inputs:
           command: publish
           publishWebProjects: true
-          
-  
-          
        - task: PublishBuildArtifacts@1
          inputs:
           PathToPublish: '$(Build.ArtifactStagingDirectory)'
@@ -54,44 +46,23 @@ stages:
    - stage: Test
      dependsOn: Build
      variables:
-      environment: test
-      jobs:
-      - deployment: ToTest
-        displayName: Deploy app to Test env
-        environment: Test
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-              - download: current
-                artifact: drop
-              - task: AzureRmWebAppDeployment@4
-                inputs:
-                ConnectionType: 'AzureRM'
-                azureSubscription: 'app-do22-oskar'
-                appType: 'webApp'
-                WebAppName: '$(webAppName)-$(environment)'
-                packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
-                AppSettings: '-FromAddressEmail po@customer.com'
-      - stage: Prod
-        dependsOn: Test
-        variables:
-         environment: prod
-         jobs:
-         - deployment: DeployToProd
-           displayName: Deploy app to Prod env
-           environment: Prod
-           strategy:
-           runOnce:
+      enviroment: test
+     jobs:
+     - deployment: DeployToTest
+       displayName: Deploy app to TestEnv
+       environment: test
+       strategy:
+         runOnce:
            deploy:
-            steps:
-            - download: current
-              artifact: drop
-            - task: AzureRmWebAppDeployment@4
-              inputs:
-                ConnectionType: 'AzureRM'
-                azureSubscription: 'app-do22-oskar'
-                appType: 'apiApp'
-                WebAppName: '$(webAppName)-$(environment)'
-                packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
+             steps:
+               - download: current
+                 artifact: drop
+               - task: AzureRmWebAppDeployment@4
+                 inputs:
+                   ConnectionType: AzureRM
+                   azureSubscription: app-do22-oskar
+                   appType: 'webApp'
+                   WebAppName: '$(webAppName)-$(environment)'
+                   AppSettings: '-FromAddressEmail po@customer.com'
+   
         
