@@ -56,18 +56,17 @@ stages:
      variables:
       environment: test
       jobs:
-      job:
       - deployment: DeployToTest
         displayName: Deploy app to Test env
         environment: Test
         strategy:
-         runOnce:
-          deploy:
-            steps:
-            - download: current
-              artifact: drop
-            - task: AzureRmWebAppDeployment@4
-              inputs:
+          runOnce:
+            deploy:
+              steps:
+              - download: current
+                artifact: drop
+              - task: AzureRmWebAppDeployment@4
+                inputs:
                 ConnectionType: 'AzureRM'
                 azureSubscription: 'app-do22-oskar'
                 appType: 'webApp'
