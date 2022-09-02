@@ -73,4 +73,25 @@ stages:
                 WebAppName: '$(webAppName)-$(environment)'
                 packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
                 AppSettings: '-FromAddressEmail po@customer.com'
+      - stage: Prod
+        dependsOn: Test
+        variables:
+        environment: prod
+        jobs:
+      - deployment: DeployToProd
+        displayName: Deploy app to Prod env
+        environment: Prod
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - download: current
+              artifact: drop
+            - task: AzureRmWebAppDeployment@4
+              inputs:
+                ConnectionType: 'AzureRM'
+                azureSubscription: 'app-do22-oskar'
+                appType: 'apiApp'
+                WebAppName: '$(webAppName)-$(environment)'
+                packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
         
