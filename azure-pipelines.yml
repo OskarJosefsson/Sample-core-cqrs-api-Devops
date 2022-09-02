@@ -37,7 +37,7 @@ stages:
          displayName: 'dotnet publish'
          inputs:
           command: publish
-          publishWebProjects: false
+          publishWebProjects: true
        - task: PublishBuildArtifacts@1
          inputs:
           PathToPublish: '$(Build.ArtifactStagingDirectory)'
