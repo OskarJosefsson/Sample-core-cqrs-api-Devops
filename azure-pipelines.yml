@@ -64,7 +64,7 @@ stages:
                    ConnectionType: AzureRM
                    azureSubscription: app-do22-oskar
                    appType: 'webApp'
-                   WebAppName: '$(webAppName)-$(environment)'
+                   WebAppName: '$(webAppName)-test'
                    packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
                    AppSettings: '-FromAddressEmail po@customer.com'
    
