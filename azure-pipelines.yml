@@ -11,8 +11,8 @@ variables:
     buildConfiguration: 'Release'
     webAppName: 'app-do22-oskar'
     newSourceBranch: "$(Build.SourceBranchName)"
-    isMaster: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
-
+    isMaster: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
+    isDevelop: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
 stages:
    - stage: Build
      jobs:
@@ -47,7 +47,7 @@ stages:
           publishLocation: 'Container'
   
    - stage: Test
-     condition: 
+     condition: and(succeeded(), eq(variables.isDevelop, 'true'))
      dependsOn: Build
      variables:
       enviroment: test
