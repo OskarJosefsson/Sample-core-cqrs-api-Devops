@@ -38,7 +38,7 @@ namespace SampleProject.UnitTests.ForeignExchanges
         }
 
         [Test]
-        public void GetConversionRates_WhenCacheAvailable_ShouldReturnThreeValues()
+        public void GetConversionRates_WhenCacheAvailable_ShouldReturnOneValue()
         {
 
             //Arrange
