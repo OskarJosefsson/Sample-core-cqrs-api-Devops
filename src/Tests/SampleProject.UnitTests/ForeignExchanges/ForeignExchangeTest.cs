@@ -22,7 +22,7 @@ namespace SampleProject.UnitTests.ForeignExchanges
             //Arrange
             
             var _cacheStore = Substitute.For<ICacheStore>();
-            var sut = Substitute.For<ForeignExchange>(_cacheStore);
+            var sut = new ForeignExchange(_cacheStore);
             int expectedResult = 2;
 
             //Act
@@ -31,12 +31,42 @@ namespace SampleProject.UnitTests.ForeignExchanges
 
             //Assert
 
-            result.Count().Equals(expectedResult);
+            
+
+            Assert.AreEqual(expectedResult, result.Count);
+
+        }
+
+        [Test]
+        public void GetConversionRates_WhenCacheAvailable_ShouldReturnThreeValues()
+        {
+
+            //Arrange
+            
+            var _cacheStore = Substitute.For<ICacheStore>();
+            var conversionRates = new List<ConversionRate>();
+
+            int expectedResult = 3;
+            conversionRates.Add(new ConversionRate("USD", "EUR", (decimal)0.88));
+            conversionRates.Add(new ConversionRate("EUR", "USD", (decimal)1.13));
+            conversionRates.Add(new ConversionRate("SEK", "USD", (decimal)0.09));
+
+            _cacheStore.Add(new ConversionRatesCache(conversionRates), new ConversionRatesCacheKey(), DateTime.Now.Date.AddDays(1));
+
+            var sut = new ForeignExchange(_cacheStore);
+            
+
+            //Act
+
+            var result = sut.GetConversionRates();
+
+            //Assert
+
+            Assert.AreEqual(expectedResult, result.Count);
 
 
 
         }
-
 
 
     }
