@@ -42,16 +42,17 @@ namespace SampleProject.UnitTests.ForeignExchanges
         {
 
             //Arrange
-            
+            int expectedResult = 1;
             var _cacheStore = Substitute.For<ICacheStore>();
+            
             var conversionRates = new List<ConversionRate>();
-
-            int expectedResult = 3;
             conversionRates.Add(new ConversionRate("USD", "EUR", (decimal)0.88));
-            conversionRates.Add(new ConversionRate("EUR", "USD", (decimal)1.13));
-            conversionRates.Add(new ConversionRate("SEK", "USD", (decimal)0.09));
+            ConversionRatesCache cache = new ConversionRatesCache(conversionRates);
+            
 
-            _cacheStore.Add(new ConversionRatesCache(conversionRates), new ConversionRatesCacheKey(), DateTime.Now.Date.AddDays(1));
+           _cacheStore.Get<ConversionRatesCache>(Arg.Any<ConversionRatesCacheKey>()).Returns(cache);
+
+           
 
             var sut = new ForeignExchange(_cacheStore);
             
