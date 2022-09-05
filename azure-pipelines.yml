@@ -54,7 +54,7 @@ stages:
           publishLocation: 'Container'
   
    - stage: Test
-     condition: and(succeeded(), eq(variables.isDevelop, 'true'))
+     condition: and(succeeded(), or(eq(variables.isMaster, 'true'), eq(variables.isDevelop, 'true')))
      dependsOn: Build
      variables:
       enviroment: test
@@ -77,7 +77,7 @@ stages:
                    packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
                    AppSettings: '-FromAddressEmail po@customer.com'
    - stage: Prod
-     condition: and(succeeded(),{{- if or (eq variables.isDevelop true) (eq variables.isMaster true) }})
+     condition: and(succeeded(), eq(variables.isMaster, 'true'))
      dependsOn: Test
      variables:
       environment: prod
