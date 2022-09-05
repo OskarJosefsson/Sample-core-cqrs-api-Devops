@@ -16,7 +16,7 @@ namespace SampleProject.UnitTests.Customers
             var customerUniquenessChecker = Substitute.For<ICustomerUniquenessChecker>();
             const string email = "testEmail@email.com";
             customerUniquenessChecker.IsUnique(email).Returns(true);
-
+            
             // Act
             var customer = Customer.CreateRegistered(email, "Sample name", customerUniquenessChecker);
 
@@ -34,6 +34,23 @@ namespace SampleProject.UnitTests.Customers
 
             // Assert
             AssertBrokenRule<CustomerEmailMustBeUniqueRule>(() =>
+            {
+                // Act
+                Customer.CreateRegistered(email, "Sample name", customerUniquenessChecker);
+            });
+        }
+
+
+        [Test]
+        public void EmailDomainName_MustBeNackademin()
+        {
+            // Arrange
+            var customerUniquenessChecker = Substitute.For<ICustomerUniquenessChecker>();
+            const string email = "testEmail@email.com";
+            customerUniquenessChecker.IsUnique(email).Returns(true);
+
+            // Assert
+            AssertBrokenRule<EmailMustIncludeDomainRule>(() =>
             {
                 // Act
                 Customer.CreateRegistered(email, "Sample name", customerUniquenessChecker);
