@@ -77,10 +77,10 @@ stages:
                    packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
                    AppSettings: '-FromAddressEmail po@customer.com'
    - stage: Prod
-     condition: and(succeeded(), eq(variables.isMain, 'true'))
-     dependsOn: Build
+     condition: and(succeeded(), eq(variables.isMaster, 'true'))
+     dependsOn: Test
      variables:
-      enviroment: prod
+      environment: prod
      jobs:
      - deployment: DeployToProd
        displayName: Deploy app to ProdEnv
