@@ -78,7 +78,7 @@ stages:
                    AppSettings: '-FromAddressEmail po@customer.com'
    - stage: Prod
      condition: and(succeeded(), eq(variables.isMaster, 'true'))
-     dependsOn: Build
+     dependsOn: Test
      variables:
       environment: prod
      jobs:
