@@ -16,7 +16,7 @@ namespace SampleProject.Infrastructure.Domain.ForeignExchanges
 
         public List<ConversionRate> GetConversionRates()
         {
-            var ratesCache = this._cacheStore.Get(new ConversionRatesCacheKey());
+            var ratesCache = this._cacheStore.Get<ConversionRatesCache> (new ConversionRatesCacheKey());
 
             if (ratesCache != null)
             {
