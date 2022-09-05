@@ -77,7 +77,7 @@ stages:
                    packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
                    AppSettings: '-FromAddressEmail po@customer.com'
    - stage: Prod
-     condition: and(succeeded(),{{- if or (eq .Values.isDevelop, true) (eq .Values.isMaster, true) }})
+     condition: and(succeeded(),{{- if or (eq variables.isDevelop true) (eq variables.isMaster true) }})
      dependsOn: Test
      variables:
       environment: prod
