@@ -44,6 +44,7 @@ namespace SampleProject.Domain.Customers
             ICustomerUniquenessChecker customerUniquenessChecker)
         {
             CheckRule(new CustomerEmailMustBeUniqueRule(customerUniquenessChecker, email));
+            CheckRule(new EmailDomainRule(email));
 
             return new Customer(email, name);
         }

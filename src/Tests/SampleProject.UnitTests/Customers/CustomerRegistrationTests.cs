@@ -39,5 +39,22 @@ namespace SampleProject.UnitTests.Customers
                 Customer.CreateRegistered(email, "Sample name", customerUniquenessChecker);
             });
         }
+
+
+        [Test]
+        public void GivenEmail_CanNotHaveDomain()
+        {
+            // Arrange
+            var customerUniquenessChecker = Substitute.For<ICustomerUniquenessChecker>();
+            const string email = "testEmail@email.com";
+            customerUniquenessChecker.IsUnique(email).Returns(true);
+
+            // Assert
+            AssertBrokenRule<EmailDomainRule>(() =>
+            {
+                // Act
+                Customer.CreateRegistered(email, "Sample name", customerUniquenessChecker);
+            });
+        }
     }
 }
