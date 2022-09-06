@@ -11,13 +11,15 @@ namespace SampleProject.Domain.Customers.Rules
     public class EmailMustIncludeDomainRule : IBusinessRule
     {
         private string _email;
+        private IEmailMustBeDomainChecker _domainChecker;
 
-        public EmailMustIncludeDomainRule(string email)
+        public EmailMustIncludeDomainRule(IEmailMustBeDomainChecker domainChecker,string email)
         {
             _email = email;
+            _domainChecker = domainChecker;
         }
 
-        public bool IsBroken() => !_email.ToLower().EndsWith("nackademin.se");
+        public bool IsBroken() => !_domainChecker.isDomain(_email);
 
         public string Message => "Domain must be nackademin.se";
 
