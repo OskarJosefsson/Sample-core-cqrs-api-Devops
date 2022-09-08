@@ -24,12 +24,14 @@ resource sqlServer 'Microsoft.Sql/servers@2021-08-01-preview' = {
   }
 
   resource fwRuleHome 'firewallRules@2022-02-01-preview' = {
-    name: 'MySpace'
+    name: 'MyMachine'
     properties: {
-      startIpAddress: '158.174.49.248'
-      endIpAddress: '158.174.49.248'
+      startIpAddress: '158.174.144.216'
+      endIpAddress: '158.174.144.216'
     }
   }
+
+
 
   resource db 'databases@2021-08-01-preview' = {
     name: sqlDbName
