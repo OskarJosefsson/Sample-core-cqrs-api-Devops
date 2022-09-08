@@ -1,7 +1,7 @@
 param environmentName string = 'environment-name'
 param location string = resourceGroup().location
 param appName string = 'devops22-firstName'
-param costing string = 'bill-payer'
+
 
 @secure()
 param dbPassword string
@@ -26,9 +26,6 @@ resource appPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   sku: {
     name: skuName
     capacity: skuCapacity
-  }
-  tags: {
-    costing: costing
   }
 }
 
@@ -57,9 +54,6 @@ resource app 'Microsoft.Web/sites@2022-03-01' = {
         }
       ]
     }
-  }
-  tags: {
-    costing: costing
   }
 }
 

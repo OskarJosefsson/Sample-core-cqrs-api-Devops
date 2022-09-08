@@ -1,5 +1,5 @@
 param location string = resourceGroup().location
-param costing string = 'bill-payer'
+
 
 @secure()
 param dbPassword string
