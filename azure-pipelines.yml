@@ -86,7 +86,7 @@ stages:
            - task: AzureRmWebAppDeployment@4
              inputs:
                ConnectionType: AzureRM
-               azureSubscription: app-do22-oskar
+               azureSubscription: app-devops22-oskar
                appType: 'webApp'
                WebAppName: 'app-$(webAppName)-test'
                packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
