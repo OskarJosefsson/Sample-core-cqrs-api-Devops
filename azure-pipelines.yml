@@ -11,6 +11,7 @@ variables:
     buildConfiguration: 'Release'
     webAppName: 'app-do22-oskar'
     resourceGroupName: 'rg-devops22-oskar'
+    subscriptionId: "2dcd32a4-157f-4eda-80bc-3bb7e643e20d"
     newSourceBranch: "$(Build.SourceBranchName)"
     isMaster: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
     isDevelop: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
