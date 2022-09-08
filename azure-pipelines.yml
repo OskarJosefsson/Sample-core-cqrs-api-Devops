@@ -10,6 +10,8 @@ pool:
 variables:
     buildConfiguration: 'Release'
     webAppName: 'app-do22-oskar'
+    resourceGroupName: 'rg-devops22-oskar'
+    subscriptionId: "2dcd32a4-157f-4eda-80bc-3bb7e643e20d"
     newSourceBranch: "$(Build.SourceBranchName)"
     isMaster: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
     isDevelop: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
@@ -54,7 +56,6 @@ stages:
           publishLocation: 'Container'
   
    - stage: Test
-     condition: and(succeeded(), eq(variables.isDevelop, 'true'))
      dependsOn: Build
      variables:
       enviroment: test
@@ -64,18 +65,24 @@ stages:
        environment: 'test'
        strategy:
          runOnce:
-           deploy:
-             steps:
-               - download: current
-                 artifact: 'drop'
-               - task: AzureRmWebAppDeployment@4
-                 inputs:
-                   ConnectionType: AzureRM
-                   azureSubscription: app-do22-oskar
-                   appType: 'webApp'
-                   WebAppName: '$(webAppName)-test'
-                   packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
-                   AppSettings: '-FromAddressEmail po@customer.com'
+          deploy:
+           steps:
+           - checkout: self
+
+           - task: AzureResourceManagerTemplateDeployment@3
+             inputs:
+               deploymentScope: 'Resource Group'
+               azureResourceManagerConnection: 'app-devops22-oskar'
+               subscriptionId: '$(subscriptionId)'
+               action: 'Create Or Update Resource Group'
+               resourceGroupName: '$(resourceGroupName)'
+               location: 'West Europe'
+               templateLocation: 'Linked artifact'
+               csmFile: 'infra/deploy.bicep'
+               deploymentMode: Incremental
+               overrideParameters: -appName $(webAppName) -environmentName Test
+               deploymentName: 'DeployPipelineTemplate'
+               
    - stage: Prod
      condition: and(succeeded(), eq(variables.isMain, 'true'))
      dependsOn: Build
