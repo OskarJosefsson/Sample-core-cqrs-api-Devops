@@ -33,7 +33,7 @@ resource appPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 }
 
 resource app 'Microsoft.Web/sites@2022-03-01' = {
-  kind: 'app'
+  kind: 'api'
   location: location
   name: appFullName
   properties: {
