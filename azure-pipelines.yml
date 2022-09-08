@@ -94,7 +94,6 @@ stages:
                AppSettings: '-FromAddressEmail real@customer.com'              
                
    - stage: Prod
-     condition: and(succeeded(), eq(variables.isMain, 'true'))
      dependsOn: Build
      variables:
       enviroment: prod
