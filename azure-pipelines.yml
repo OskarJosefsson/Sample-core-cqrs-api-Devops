@@ -71,7 +71,7 @@ stages:
            - task: AzureResourceManagerTemplateDeployment@3
              inputs:
                deploymentScope: 'Resource Group'
-               azureResourceManagerConnection: 'SC-IAC'
+               azureResourceManagerConnection: 'app-do22-oskar'
                subscriptionId: '$(subscriptionId)'
                action: 'Create Or Update Resource Group'
                resourceGroupName: '$(resourceGroupName)'
