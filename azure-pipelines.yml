@@ -64,18 +64,24 @@ stages:
        environment: 'test'
        strategy:
          runOnce:
-           deploy:
-             steps:
-               - download: current
-                 artifact: 'drop'
-               - task: AzureRmWebAppDeployment@4
-                 inputs:
-                   ConnectionType: AzureRM
-                   azureSubscription: app-do22-oskar
-                   appType: 'webApp'
-                   WebAppName: '$(webAppName)-test'
-                   packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
-                   AppSettings: '-FromAddressEmail po@customer.com'
+          deploy:
+           steps:
+           - checkout: self
+
+           - task: AzureResourceManagerTemplateDeployment@3
+             inputs:
+               deploymentScope: 'Resource Group'
+               azureResourceManagerConnection: 'SC-IAC'
+               subscriptionId: '$(subscriptionId)'
+               action: 'Create Or Update Resource Group'
+               resourceGroupName: '$(resourceGroupName)'
+               location: 'West Europe'
+               templateLocation: 'Linked artifact'
+               csmFile: 'infra/deploy.bicep'
+               deploymentMode: Incremental
+               overrideParameters: -appName $(webAppName) -environmentName Test
+               deploymentName: 'DeployPipelineTemplate'
+               
    - stage: Prod
      condition: and(succeeded(), eq(variables.isMain, 'true'))
      dependsOn: Build
