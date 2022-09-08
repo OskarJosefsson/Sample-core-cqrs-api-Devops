@@ -80,7 +80,7 @@ stages:
                templateLocation: 'Linked artifact'
                csmFile: 'infra/deploy.bicep'
                deploymentMode: Incremental
-               overrideParameters: -appName $(webAppName) -environmentName Test
+               overrideParameters: -appName $(webAppName) -environmentName test
                deploymentName: 'DeployPipelineTemplate'
                
                
