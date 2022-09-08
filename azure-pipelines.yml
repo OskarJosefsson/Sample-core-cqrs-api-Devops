@@ -77,7 +77,6 @@ stages:
                    packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
                    AppSettings: '-FromAddressEmail po@customer.com'
    - stage: Prod
-     condition: and(succeeded(), eq(variables.isMaster, 'true'))
      dependsOn: Build
      variables:
       environment: prod
