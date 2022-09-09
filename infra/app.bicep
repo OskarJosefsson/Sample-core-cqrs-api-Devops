@@ -29,7 +29,7 @@ resource appPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   }
 }
 
-module appInsightsModule 'appinsights.bicep' = {
+module appInsightsModule 'appInsights.bicep' = {
   name: 'appInsightsDeploy'
   params: {
     environmentName: environmentName
