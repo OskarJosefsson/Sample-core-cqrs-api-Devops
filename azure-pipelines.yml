@@ -84,13 +84,13 @@ stages:
                overrideParameters: -appName $(webAppName) -environmentName test
                deploymentName: 'DeployPipelineTemplate'
                
-           - task: AzureRmWebAppDeployment@4
+           - task: AzureWebApp@1
              inputs:
-               ConnectionType: AzureRM
                azureSubscription: app-devops22-oskar
                appType: 'webApp'
-               WebAppName: 'app-$(webAppName)-test'
-               packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
+               appName: 'app-$(webAppName)-test'
+               package: '$(Pipeline.Workspace)/**/*.zip'
+               deploymentMethod: 'zipDeploy'
                AppSettings: '-FromAddressEmail real@customer.com'              
                
    - stage: Prod
