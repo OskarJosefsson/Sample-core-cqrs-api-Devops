@@ -73,7 +73,7 @@ stages:
            - task: AzureResourceManagerTemplateDeployment@3
              inputs:
                deploymentScope: 'Resource Group'
-               azureResourceManagerConnection: 'app-devops22-oskar'
+               azureResourceManagerConnection: 'sc-devops22-oskar'
                subscriptionId: '$(subscriptionId)'
                action: 'Create Or Update Resource Group'
                resourceGroupName: '$(resourceGroupName)'
