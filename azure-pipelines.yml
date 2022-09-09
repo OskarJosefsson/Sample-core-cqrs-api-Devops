@@ -81,7 +81,7 @@ stages:
                templateLocation: 'Linked artifact'
                csmFile: 'infra/deploy.bicep'
                deploymentMode: Incremental
-               overrideParameters: -appName $(webAppName) -environmentName test
+               overrideParameters: -appName $(webAppName) -environmentName $(environment)
                deploymentName: 'DeployPipelineTemplate'
                
            - task: AzureWebApp@1
@@ -118,7 +118,7 @@ stages:
                  templateLocation: 'Linked artifact'
                  csmFile: 'infra/deploy.bicep'
                  deploymentMode: Incremental
-                 overrideParameters: -appName $(webAppName) -environmentName test
+                 overrideParameters: -appName $(webAppName) -environmentName $(environment) 
                  deploymentName: 'DeployPipelineTemplate'             
 
              - task: AzureRmWebAppDeployment@4
