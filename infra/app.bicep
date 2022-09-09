@@ -29,20 +29,9 @@ resource appPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   }
 }
 
-module appInsightsModule 'appInsights.bicep' = {
-  name: 'appInsightsDeploy'
-  params: {
-    environmentName: environmentName
-    location: location
-    appName: appName
-  }
-}
 
 resource app 'Microsoft.Web/sites@2022-03-01' = {
   kind: 'api'
-  dependsOn: [
-    appInsightsModule
-  ]
   location: location
   name: appFullName
   properties: {
@@ -58,12 +47,7 @@ resource app 'Microsoft.Web/sites@2022-03-01' = {
       ftpsState: 'Disabled'
       remoteDebuggingEnabled: false
 
-      appSettings: [
-        {
-          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-          value: appInsightsModule.outputs.instrumentationKey
-        }
-      ]
+
       connectionStrings: [
         {
           name: 'OrdersConnectionString'
