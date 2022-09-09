@@ -1,12 +1,11 @@
 @description('A unique name that is appended to the service names. If empty a unique string will be generated.')
 @allowed([
-  'Test'
-  'Prod'
+  'test'
+  'prod'
 ])
 @minLength(2)
 @maxLength(4)
-param environmentName string = 'Test'
-
+param environmentName string = 'test'
 param appName string = 'devops22-oskar'
 param location string = resourceGroup().location
 
