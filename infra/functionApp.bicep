@@ -2,7 +2,7 @@ param environmentName string = 'environment-name'
 param location string = resourceGroup().location
 param appName string = 'devops22-firstName'
 param appPlanId string = 'appPlanId'
-var functionAppName = ''
+var functionAppName = 'func-${appName}-${toLower(environmentName)}'
 var newAppName = replace(appName, '-', '')
 
 
