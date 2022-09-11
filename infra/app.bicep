@@ -10,10 +10,23 @@ param sqlDbName string = 'db-name'
 param sqlServerName string = 'sql-server-name'
 
 var appFullName = 'app-${appName}-${toLower(environmentName)}'
+
 var planName = 'plan-devops22'
 
 var skuName = 'F1'
 var skuCapacity = 1
+
+
+module functionappModule 'functionApp.bicep' = {
+  name: 'functionAppDeploy'
+  params: {
+    environmentName: environmentName
+    location: location
+    appName: appName
+    appPlanId : appPlan.id
+
+  }
+}
 
 resource appPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   location: location
@@ -47,6 +60,14 @@ resource app 'Microsoft.Web/sites@2022-03-01' = {
       ftpsState: 'Disabled'
       remoteDebuggingEnabled: false
 
+            appSettings: [
+
+        {
+          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          value: functionappModule.outputs.instrumentationKey
+        }
+      ]
+
 
       connectionStrings: [
         {
@@ -60,4 +81,11 @@ resource app 'Microsoft.Web/sites@2022-03-01' = {
 
   
 }
+
+
+
+
+
+
+
 
