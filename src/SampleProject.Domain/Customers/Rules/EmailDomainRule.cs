@@ -18,9 +18,9 @@ namespace SampleProject.Domain.Customers.Rules
             _email = email;
         }
 
-        public bool IsBroken() => !_email.ToLower().EndsWith("nackademin.se");
+        public bool IsBroken() => _email.ToLower().EndsWith("nackademin.se");
 
-        public string Message => "Email should have domainname nackademin.se";
+        public string Message => "Email should not have domainname nackademin.se";
     }
 }
 

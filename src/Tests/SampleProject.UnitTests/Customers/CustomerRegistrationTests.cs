@@ -46,7 +46,7 @@ namespace SampleProject.UnitTests.Customers
         {
             // Arrange
             var customerUniquenessChecker = Substitute.For<ICustomerUniquenessChecker>();
-            const string email = "testEmail@email.com";
+            const string email = "testEmail@nackademin.se";
             customerUniquenessChecker.IsUnique(email).Returns(true);
 
             // Assert
