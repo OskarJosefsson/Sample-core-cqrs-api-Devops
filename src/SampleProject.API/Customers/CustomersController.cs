@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using SampleProject.Application.Customers;
 using SampleProject.Application.Customers.RegisterCustomer;
 
@@ -36,7 +37,7 @@ namespace SampleProject.API.Customers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomer(int id)
         {
-            return Ok(new CustomerDto { Id = Guid.NewGuid() });
+            throw new NotImplementedException("This method is not implemented");
         }
 
         [HttpPut("{id}")]
