@@ -125,7 +125,7 @@ stages:
                inputs:
                  azureSubscription: sc-devops22-oskar
                  appType: 'webApp'
-                 appName: 'app-$(webAppName)-test'
+                 appName: 'app-$(webAppName)-prod'
                  package: '$(Pipeline.Workspace)/**/*.zip'
                  deploymentMethod: 'zipDeploy'
                  AppSettings: '-FromAddressEmail real@customer.com'
