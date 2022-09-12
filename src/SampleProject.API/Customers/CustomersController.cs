@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web.Http;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SampleProject.Application.Customers;
@@ -36,7 +37,7 @@ namespace SampleProject.API.Customers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomer(int id)
         {
-            return Ok(new CustomerDto { Id = Guid.NewGuid() });
+            throw new HttpResponseException(HttpStatusCode.NotFound);
         }
 
         [HttpPut("{id}")]
