@@ -40,11 +40,5 @@ module sqlServerModule 'sqlserver.bicep' = {
   }
 }
 
-module storageaccModule 'storageacc.bicep' = {
-  name: 'storageacc'
-  params: {
-    environmentName: environmentName
-    location: location
-    appName: appName
-  }
-}
+
+
