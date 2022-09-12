@@ -56,6 +56,7 @@ stages:
           publishLocation: 'Container'
   
    - stage: Test
+     condition: and(succeeded(), eq(variables.isDevelop, 'true'))
      dependsOn: Build
      variables:
       enviroment: test
