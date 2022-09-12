@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web.Http;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using SampleProject.Application.Customers;
 using SampleProject.Application.Customers.RegisterCustomer;
 
@@ -37,7 +37,7 @@ namespace SampleProject.API.Customers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomer(int id)
         {
-            throw new HttpResponseException(HttpStatusCode.NotFound);
+            throw new NotImplementedException("This method is not implemented");
         }
 
         [HttpPut("{id}")]
