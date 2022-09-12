@@ -37,7 +37,7 @@ namespace SampleProject.API.Customers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomer(int id)
         {
-            throw new NotImplementedException("This method is not implemented");
+            return Ok(new CustomerDto { Id = Guid.NewGuid() });
         }
 
         [HttpPut("{id}")]
