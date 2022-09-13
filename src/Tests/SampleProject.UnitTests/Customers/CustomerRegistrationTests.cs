@@ -14,11 +14,12 @@ namespace SampleProject.UnitTests.Customers
         {
             // Arrange
             var customerUniquenessChecker = Substitute.For<ICustomerUniquenessChecker>();
+            var emailDomainChecker = Substitute.For<IEmailMustBeDomainChecker>();
             const string email = "testEmail@email.com";
             customerUniquenessChecker.IsUnique(email).Returns(true);
-
+            emailDomainChecker.isDomain(email).Returns(true);
             // Act
-            var customer = Customer.CreateRegistered(email, "Sample name", customerUniquenessChecker);
+            var customer = Customer.CreateRegistered(email, "Sample name", customerUniquenessChecker, emailDomainChecker);
 
             // Assert
             AssertPublishedDomainEvent<CustomerRegisteredEvent>(customer);
@@ -29,14 +30,34 @@ namespace SampleProject.UnitTests.Customers
         {
             // Arrange
             var customerUniquenessChecker = Substitute.For<ICustomerUniquenessChecker>();
+            var emailDomainChecker = Substitute.For<IEmailMustBeDomainChecker>();
             const string email = "testEmail@email.com";
             customerUniquenessChecker.IsUnique(email).Returns(false);
-
+            emailDomainChecker.isDomain(email).Returns(true);
             // Assert
             AssertBrokenRule<CustomerEmailMustBeUniqueRule>(() =>
             {
                 // Act
-                Customer.CreateRegistered(email, "Sample name", customerUniquenessChecker);
+                Customer.CreateRegistered(email, "Sample name", customerUniquenessChecker, emailDomainChecker);
+            });
+        }
+
+
+        [Test]
+        public void EmailDomainName_MustBeNackademin()
+        {
+            // Arrange
+            
+            var customerUniquenessChecker = Substitute.For<ICustomerUniquenessChecker>();
+            const string email = "oskar@test.se";
+            customerUniquenessChecker.IsUnique(email).Returns(true);
+            EmailMustBeDomainChecker check = new EmailMustBeDomainChecker("nackademin.se", email);
+
+            // Assert
+            AssertBrokenRule<EmailMustIncludeDomainRule>(() =>
+            {
+                // Act
+                Customer.CreateRegistered(email, "Sample name", customerUniquenessChecker, check );
             });
         }
     }
