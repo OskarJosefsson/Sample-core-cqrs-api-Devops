@@ -36,8 +36,9 @@ namespace SampleProject.API.Orders
         [ProducesResponseType(typeof(List<OrderDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetCustomerOrders(Guid customerId)
         {
+            
             var orders = await _mediator.Send(new GetCustomerOrdersQuery(customerId));
-
+            _logger.LogInformation("Customerorder " + customerId + " removed.");
             return Ok(orders);
         }
 
