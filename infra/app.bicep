@@ -66,9 +66,14 @@ resource app 'Microsoft.Web/sites@2022-03-01' = {
       ftpsState: 'Disabled'
 
         ipSecurityRestrictions: ((environmentName == 'test') ? [
-
+        {
+          ipAddress: '158.174.144.216/32'
+          action: 'Allow'
+          priority: 101
+          name: 'Oskars IP'
+        }
                 {
-          ipAddress: '192.71.164.4'
+          ipAddress: '192.71.164.4/32'
           action: 'Allow'
           priority: 100
           name: 'Nackademin IP'
