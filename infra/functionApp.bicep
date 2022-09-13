@@ -58,8 +58,10 @@ resource functionApp 'Microsoft.Web/sites@2020-06-01' = {
   kind: 'functionapp'
   properties: {
     httpsOnly: true
+    
     serverFarmId: appPlanId
     clientAffinityEnabled: true
+    
     siteConfig: {
       appSettings: [
         {

@@ -53,11 +53,17 @@ resource app 'Microsoft.Web/sites@2022-03-01' = {
     reserved: false
     hostNamesDisabled: false
     httpsOnly: true
+    
     siteConfig: {
       
       minTlsVersion: '1.2'
       http20Enabled: true
       ftpsState: 'Disabled'
+      ipSecurityRestrictions: [
+      
+      ]
+      
+      
       remoteDebuggingEnabled: false
 
             appSettings: [
