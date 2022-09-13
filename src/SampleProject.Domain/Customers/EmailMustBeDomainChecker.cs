@@ -10,7 +10,6 @@ namespace SampleProject.Domain.Customers
     public class EmailMustBeDomainChecker : IEmailMustBeDomainChecker
     {
 
-
         private readonly string _domain;
         private readonly string _email;
 
