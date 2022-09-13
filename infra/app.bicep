@@ -17,7 +17,7 @@ var skuName = 'F1'
 var skuCapacity = 1
 
 
-module functionappModule 'functionApp.bicep' = {
+module functionappModule 'funcstai.bicep' = {
   name: 'functionAppDeploy'
   params: {
     environmentName: environmentName
