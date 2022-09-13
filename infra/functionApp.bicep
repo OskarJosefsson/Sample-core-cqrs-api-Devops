@@ -56,33 +56,19 @@ resource functionApp 'Microsoft.Web/sites@2020-06-01' = {
   name: functionAppName
   location: location
   kind: 'functionapp'
+
+  
   
   properties: {
+  
     httpsOnly: true
     
     serverFarmId: appPlanId
     clientAffinityEnabled: true
+
+
     
     siteConfig: {
-
-
-
-        
-
-        ipSecurityRestrictions:  [
-        {
-          ipAddress: '158.174.144.216'
-          action: 'Allow'
-          priority: 100
-          name: 'Oskars IP'
-        }
-                {
-          ipAddress: '192.71.164.4'
-          action: 'Allow'
-          priority: 100
-          name: 'Nackademin IP'
-        }
-      ]
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
