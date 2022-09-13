@@ -13,20 +13,24 @@ namespace SampleProject.Application.Customers.RegisterCustomer
         private readonly ICustomerRepository _customerRepository;
         private readonly ICustomerUniquenessChecker _customerUniquenessChecker;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailMustBeDomainChecker _emailMustBeDomainChecker;
 
         public RegisterCustomerCommandHandler(
             ICustomerRepository customerRepository, 
             ICustomerUniquenessChecker customerUniquenessChecker, 
+            IEmailMustBeDomainChecker emailMustBeDomainChecker,
             IUnitOfWork unitOfWork)
         {
             this._customerRepository = customerRepository;
             _customerUniquenessChecker = customerUniquenessChecker;
             _unitOfWork = unitOfWork;
+            _emailMustBeDomainChecker = emailMustBeDomainChecker;
         }
 
         public async Task<CustomerDto> Handle(RegisterCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = Customer.CreateRegistered(request.Email, request.Name, this._customerUniquenessChecker);
+            
+            var customer = Customer.CreateRegistered(request.Email, request.Name, this._customerUniquenessChecker, this._emailMustBeDomainChecker);
 
             await this._customerRepository.AddAsync(customer);
 

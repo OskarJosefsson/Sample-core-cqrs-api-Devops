@@ -41,9 +41,11 @@ namespace SampleProject.Domain.Customers
         public static Customer CreateRegistered(
             string email, 
             string name,
-            ICustomerUniquenessChecker customerUniquenessChecker)
+            ICustomerUniquenessChecker customerUniquenessChecker,
+            IEmailMustBeDomainChecker emailMustBeDomainChecker)
         {
             CheckRule(new CustomerEmailMustBeUniqueRule(customerUniquenessChecker, email));
+            CheckRule(new EmailMustIncludeDomainRule(emailMustBeDomainChecker , email));
 
             return new Customer(email, name);
         }

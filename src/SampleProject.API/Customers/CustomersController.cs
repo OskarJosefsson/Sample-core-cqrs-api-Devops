@@ -3,8 +3,12 @@ using System.Net;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
+using Microsoft.Extensions.Logging;
+using SampleProject.API.Orders;
 using SampleProject.Application.Customers;
 using SampleProject.Application.Customers.RegisterCustomer;
+using SampleProject.Domain.Customers;
 
 namespace SampleProject.API.Customers
 {
@@ -12,11 +16,13 @@ namespace SampleProject.API.Customers
     [ApiController]
     public class CustomersController : Controller
     {
+        private readonly ILogger<CustomerOrdersController> _logger;
         private readonly IMediator _mediator;
 
-        public CustomersController(IMediator mediator)
+        public CustomersController(IMediator mediator, ILogger<CustomerOrdersController> _logger)
         {
             this._mediator = mediator;
+            this._logger = _logger;
         }
 
         /// <summary>
@@ -34,9 +40,12 @@ namespace SampleProject.API.Customers
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCustomer(int id)
+        public async Task<IActionResult> GetCustomer(Guid id)
         {
-            return Ok(new CustomerDto { Id = Guid.NewGuid() });
+            _logger.LogInformation("fetching Customer Id " + id);
+
+            return Ok(id);
+            
         }
 
         [HttpPut("{id}")]

@@ -17,7 +17,7 @@ var skuName = 'F1'
 var skuCapacity = 1
 
 
-module functionappModule 'functionApp.bicep' = {
+module functionappModule 'funcstai.bicep' = {
   name: 'functionAppDeploy'
   params: {
     environmentName: environmentName
@@ -26,7 +26,8 @@ module functionappModule 'functionApp.bicep' = {
     appPlanId : appPlan.id
 
   }
-}
+} 
+
 
 resource appPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   location: location
@@ -47,17 +48,39 @@ resource app 'Microsoft.Web/sites@2022-03-01' = {
   kind: 'api'
   location: location
   name: appFullName
+
+  
   properties: {
     enabled: true
     serverFarmId: appPlan.id
     reserved: false
     hostNamesDisabled: false
     httpsOnly: true
+
+    
+    
     siteConfig: {
       
       minTlsVersion: '1.2'
       http20Enabled: true
       ftpsState: 'Disabled'
+
+        ipSecurityRestrictions: ((environmentName == 'test') ? [
+        {
+          ipAddress: '158.174.144.216/32'
+          action: 'Allow'
+          priority: 101
+          name: 'Oskars IP'
+        }
+                {
+          ipAddress: '192.71.164.4/32'
+          action: 'Allow'
+          priority: 100
+          name: 'Nackademin IP'
+        }
+      ] : [])
+      
+      
       remoteDebuggingEnabled: false
 
             appSettings: [

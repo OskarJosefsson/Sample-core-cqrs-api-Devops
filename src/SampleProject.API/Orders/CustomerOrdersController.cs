@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SampleProject.Application.Orders.ChangeCustomerOrder;
 using SampleProject.Application.Orders.GetCustomerOrderDetails;
 using SampleProject.Application.Orders.GetCustomerOrders;
@@ -16,11 +17,13 @@ namespace SampleProject.API.Orders
     [ApiController]
     public class CustomerOrdersController : Controller
     {
+        private readonly ILogger<CustomerOrdersController> _logger;
         private readonly IMediator _mediator;
 
-        public CustomerOrdersController(IMediator mediator)
+        public CustomerOrdersController(IMediator mediator, ILogger<CustomerOrdersController> logger)
         {
             this._mediator = mediator;
+            _logger = logger;
         }
 
         /// <summary>
@@ -33,8 +36,9 @@ namespace SampleProject.API.Orders
         [ProducesResponseType(typeof(List<OrderDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetCustomerOrders(Guid customerId)
         {
+            
             var orders = await _mediator.Send(new GetCustomerOrdersQuery(customerId));
-
+            _logger.LogInformation("Customerorder " + customerId + "fetched.");
             return Ok(orders);
         }
 
@@ -102,7 +106,9 @@ namespace SampleProject.API.Orders
             [FromRoute]Guid customerId,
             [FromRoute]Guid orderId)
         {
+            
             await _mediator.Send(new RemoveCustomerOrderCommand(customerId, orderId));
+            _logger.LogInformation("Customerorder " + customerId + " removed.");
 
             return Ok();
         }
