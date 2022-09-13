@@ -40,10 +40,12 @@ namespace SampleProject.API.Customers
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCustomer(int id)
+        public async Task<IActionResult> GetCustomer(Guid id)
         {
-            return Ok(new CustomerDto { Id = Guid.NewGuid() });
-            _logger.LogInformation("Customerorder " + id+ " removed.");
+            _logger.LogInformation("fetching Customer Id " + id);
+
+            return Ok(id);
+            
         }
 
         [HttpPut("{id}")]
