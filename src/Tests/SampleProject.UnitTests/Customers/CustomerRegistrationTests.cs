@@ -17,7 +17,7 @@ namespace SampleProject.UnitTests.Customers
             var emailDomainChecker = Substitute.For<IEmailMustBeDomainChecker>();
             const string email = "testEmail@email.com";
             customerUniquenessChecker.IsUnique(email).Returns(true);
-            emailDomainChecker.isDomain(email).Returns(false);
+            emailDomainChecker.isDomain(email).Returns(true);
             // Act
             var customer = Customer.CreateRegistered(email, "Sample name", customerUniquenessChecker, emailDomainChecker);
 
