@@ -38,7 +38,7 @@ namespace SampleProject.API.Orders
         {
             
             var orders = await _mediator.Send(new GetCustomerOrdersQuery(customerId));
-            _logger.LogInformation("Customerorder " + customerId + " removed.");
+            _logger.LogInformation("Customerorder " + customerId + "fetched.");
             return Ok(orders);
         }
 
