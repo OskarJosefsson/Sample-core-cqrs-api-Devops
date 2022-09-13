@@ -69,7 +69,7 @@ resource app 'Microsoft.Web/sites@2022-03-01' = {
         {
           ipAddress: '158.174.144.216'
           action: 'Allow'
-          priority: 100
+          priority: 101
           name: 'Oskars IP'
         }
                 {
