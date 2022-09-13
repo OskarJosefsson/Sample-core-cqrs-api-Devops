@@ -17,8 +17,8 @@ var skuName = 'F1'
 var skuCapacity = 1
 
 
-module functionappModule 'functionApp.bicep' = {
-  name: 'functionAppDeploy'
+module functionappModule 'functionApp.bicep' = if (environmentName == 'test') {
+    name: 'functionAppDeploy'
   params: {
     environmentName: environmentName
     location: location
@@ -26,7 +26,17 @@ module functionappModule 'functionApp.bicep' = {
     appPlanId : appPlan.id
 
   }
-}
+} 
+module functionappModuleProd 'functionApp.bicep' = if (environmentName == 'prod') {
+    name: 'functionAppProdDeploy'
+  params: {
+    environmentName: environmentName
+    location: location
+    appName: appName
+    appPlanId : appPlan.id
+
+  }
+} 
 
 resource appPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   location: location
@@ -60,7 +70,7 @@ resource app 'Microsoft.Web/sites@2022-03-01' = {
       http20Enabled: true
       ftpsState: 'Disabled'
       ipSecurityRestrictions: [
-      
+
       ]
       
       
